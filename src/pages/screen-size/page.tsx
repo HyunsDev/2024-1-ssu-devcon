@@ -18,6 +18,10 @@ class Animation {
     this.mousePos = { x: e.clientX, y: e.clientY };
   }
 
+  updateTouchPos(e: TouchEvent) {
+    this.mousePos = { x: e.touches?.[0].clientX, y: e.touches?.[0].clientY };
+  }
+
   draw() {
     this.time += 1;
 
@@ -36,6 +40,7 @@ class Animation {
   run() {
     this.resize();
     window.addEventListener("mousemove", this.updateMousePos.bind(this));
+    window.addEventListener("touchmove", this.updateTouchPos.bind(this));
     window.addEventListener("resize", this.resize.bind(this));
     this.animate();
   }
@@ -43,6 +48,7 @@ class Animation {
   stop() {
     cancelAnimationFrame(this.frameId);
     window.removeEventListener("mousemove", this.updateMousePos);
+    window.removeEventListener("touchmove", this.updateTouchPos);
     window.removeEventListener("resize", this.resize);
   }
 }
